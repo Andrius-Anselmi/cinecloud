@@ -30,8 +30,8 @@ public class CategoryService {
         categoryRepository.deleteById(id);
     }
 
-    public Category update(Category category){
-        Optional<Category> optionalCategory = categoryRepository.findById(category.getId());
+    public Category update(Category category, Long id){
+        Optional<Category> optionalCategory = categoryRepository.findById(id);
         if(optionalCategory.isPresent()){
             Category save = optionalCategory.get();
             save.setId(category.getId());

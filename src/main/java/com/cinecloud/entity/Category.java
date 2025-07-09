@@ -1,14 +1,16 @@
 package com.cinecloud.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Entity
 @Table(name = "category")
-public class category {
+public class Category {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
