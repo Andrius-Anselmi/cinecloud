@@ -1,4 +1,4 @@
-package com.cinecloud.controller.Request;
+package com.cinecloud.controller.request;
 
 public record CategoryRequest(String name) {
 }

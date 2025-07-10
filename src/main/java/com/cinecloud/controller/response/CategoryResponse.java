@@ -1,4 +1,4 @@
-package com.cinecloud.controller.Response;
+package com.cinecloud.controller.response;
 
 
 import lombok.*;

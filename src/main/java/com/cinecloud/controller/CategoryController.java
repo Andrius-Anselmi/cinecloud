@@ -1,9 +1,10 @@
 package com.cinecloud.controller;
 
-import com.cinecloud.controller.Request.CategoryRequest;
-import com.cinecloud.controller.Response.CategoryResponse;
+import com.cinecloud.controller.request.CategoryRequest;
+import com.cinecloud.controller.response.CategoryResponse;
 import com.cinecloud.entity.Category;
 import com.cinecloud.mapper.CategoryMapper;
+import com.cinecloud.mapper.StreamingMapper;
 import com.cinecloud.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -36,15 +37,15 @@ public class CategoryController {
 
     @GetMapping()
     public ResponseEntity<List<CategoryResponse>> getAll() {
-        List<CategoryResponse> categoryResponses = categoryService.getAll().stream()
-                .map(CategoryMapper::toCategoryResponse).toList();
-        return ResponseEntity.ok(categoryResponses);
+        return ResponseEntity.ok(categoryService.getAll().stream().
+                map(CategoryMapper::toCategoryResponse).toList());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategoryResponse> update(@PathVariable Long id, @RequestBody Category category){
+    public ResponseEntity<CategoryResponse> update(@PathVariable Long id, @RequestBody CategoryRequest request){
         Optional<Category> optionalCategory = categoryService.getById(id);
         if(optionalCategory.isPresent()){
+            Category category = CategoryMapper.toCategory(request);
             category.setId(id);
             categoryService.update(category,id);
             return ResponseEntity.ok(CategoryMapper.toCategoryResponse(optionalCategory.get()));
