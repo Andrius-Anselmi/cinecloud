@@ -1,16 +1,22 @@
 package com.cinecloud.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "streaming")
 public class Streaming {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    Long id;
+    private Long id;
 
-    String name;
+    private String name;
 
 
 }
