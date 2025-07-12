@@ -7,6 +7,7 @@ import com.cinecloud.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,8 +20,8 @@ public class MovieService {
     private final StreamingService streamingService;
 
     public Movie save(Movie movie){
-        movie.setCategories(categories(movie));
-        movie.setStreamings(streamings(movie));
+        movie.setCategories(categories(movie.getCategories()));
+        movie.setStreamings(streamings(movie.getStreamings()));
         return movieRepository.save(movie);
     }
 
@@ -36,24 +37,22 @@ public class MovieService {
         movieRepository.deleteById(id);
     }
 
-    private List<Streaming> streamings(Movie movie){
-        List<Streaming> streamings = movie.getStreamings();
-        List<Streaming> streamingsDB = streamingService.getAll();
-        List<Long> streamingIds = streamings.stream()
-                .map(streaming -> streaming.getId()).toList();
-
-        return streamingsDB.stream().filter(streaming -> streamingIds.contains(streaming.getId())).toList();
+    private List<Streaming> streamings(List<Streaming> streamings){
+        List<Streaming> streamingsFound = new ArrayList<>();
+        streamings.forEach(streaming -> streamingService.getById(streaming.getId()).ifPresent(streamingsFound::add));
+        return streamingsFound;
     }
 
-    private List<Category> categories(Movie movie){
-        List<Category> categories = movie.getCategories();
-        List<Category> categoriesDB = categoryService.getAll();
-        List<Long> categoriesIds = categories.stream().
-                map(category -> category.getId()).toList();
-
-        return categoriesDB.stream().filter(category -> categoriesIds.contains(category.getId())).toList();
-
+    private List<Category> categories(List<Category> categories){
+        List<Category> categoriesFound = new ArrayList<>();
+        categories.forEach(category -> categoryService.getById(category.getId()).ifPresent(categoriesFound::add));
+        return categoriesFound;
     }
+
+
+
+
+
 
 
 }
