@@ -30,15 +30,17 @@ public class CategoryService {
         categoryRepository.deleteById(id);
     }
 
-    public Category update(Category category, Long id){
+    public Optional<Category> update(Long id, Category categoryUpdate){
         Optional<Category> optionalCategory = categoryRepository.findById(id);
         if(optionalCategory.isPresent()){
             Category save = optionalCategory.get();
-            save.setId(category.getId());
-            save.setName(category.getName());
-            return categoryRepository.save(save);
+            save.setName(categoryUpdate.getName());
+            categoryRepository.save(save);
+            return Optional.of(save);
         }
 
-        return null;
+        return Optional.empty();
+
+
     }
 }
