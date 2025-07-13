@@ -4,7 +4,6 @@ import com.cinecloud.controller.request.CategoryRequest;
 import com.cinecloud.controller.response.CategoryResponse;
 import com.cinecloud.entity.Category;
 import com.cinecloud.mapper.CategoryMapper;
-import com.cinecloud.mapper.StreamingMapper;
 import com.cinecloud.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -43,14 +42,9 @@ public class CategoryController {
 
     @PutMapping("/{id}")
     public ResponseEntity<CategoryResponse> update(@PathVariable Long id, @RequestBody CategoryRequest request){
-        Optional<Category> optionalCategory = categoryService.getById(id);
-        if(optionalCategory.isPresent()){
-            Category category = CategoryMapper.toCategory(request);
-            category.setId(id);
-            categoryService.update(category,id);
-            return ResponseEntity.ok(CategoryMapper.toCategoryResponse(optionalCategory.get()));
-        }
-        return ResponseEntity.notFound().build();
+        return categoryService.update(id,CategoryMapper.toCategory(request)).
+                map(category -> ResponseEntity.ok(CategoryMapper.toCategoryResponse(category))).
+                orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
