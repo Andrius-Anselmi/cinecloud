@@ -1,7 +1,7 @@
 package com.cinecloud.mapper;
 
-import com.cinecloud.controller.Request.CategoryRequest;
-import com.cinecloud.controller.Response.CategoryResponse;
+import com.cinecloud.controller.request.CategoryRequest;
+import com.cinecloud.controller.response.CategoryResponse;
 import com.cinecloud.entity.Category;
 import lombok.experimental.UtilityClass;
 
