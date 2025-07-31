@@ -91,4 +91,5 @@ src/
 
 ## 📄 Licença
 
-Este projeto está licenciado sob a licença MIT.
+Este projeto está licenciado sob a licença MIT.  
+Consulte o arquivo [LICENSE](./LICENSE) para mais informações.
